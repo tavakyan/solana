@@ -7,6 +7,7 @@ use {
     crate::{
         encryption::pedersen::{PedersenCommitment, PedersenOpening, G, H},
         sigma_proofs::{canonical_scalar_from_optional_slice, ristretto_point_from_optional_slice},
+        UNIT_LEN,
     },
     rand::rngs::OsRng,
 };
@@ -23,6 +24,9 @@ use {
     merlin::Transcript,
     subtle::{Choice, ConditionallySelectable, ConstantTimeGreater},
 };
+
+/// Byte length of a fee sigma proof.
+const FEE_SIGMA_PROOF_LEN: usize = 256;
 
 /// Fee sigma proof.
 ///
@@ -351,9 +355,9 @@ impl FeeSigmaProof {
         }
     }
 
-    pub fn to_bytes(&self) -> [u8; 256] {
-        let mut buf = [0_u8; 256];
-        let mut chunks = buf.chunks_mut(32);
+    pub fn to_bytes(&self) -> [u8; FEE_SIGMA_PROOF_LEN] {
+        let mut buf = [0_u8; FEE_SIGMA_PROOF_LEN];
+        let mut chunks = buf.chunks_mut(UNIT_LEN);
         chunks
             .next()
             .unwrap()
@@ -390,7 +394,7 @@ impl FeeSigmaProof {
     }
 
     pub fn from_bytes(bytes: &[u8]) -> Result<Self, FeeSigmaProofError> {
-        let mut chunks = bytes.chunks(32);
+        let mut chunks = bytes.chunks(UNIT_LEN);
         let Y_max_proof = ristretto_point_from_optional_slice(chunks.next())?;
         let z_max_proof = canonical_scalar_from_optional_slice(chunks.next())?;
         let c_max_proof = canonical_scalar_from_optional_slice(chunks.next())?;

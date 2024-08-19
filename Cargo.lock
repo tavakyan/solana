@@ -7963,6 +7963,25 @@ dependencies = [
 ]
 
 [[package]]
+name = "solana-transaction-status-smol"
+version = "2.1.0"
+dependencies = [
+ "Inflector",
+ "base64 0.22.1",
+ "bincode",
+ "borsh 1.5.1",
+ "bs58",
+ "lazy_static",
+ "log",
+ "serde",
+ "serde_derive",
+ "serde_json",
+ "solana-account-decoder",
+ "solana-sdk",
+ "thiserror",
+]
+
+[[package]]
 name = "solana-turbine"
 version = "2.1.0"
 dependencies = [

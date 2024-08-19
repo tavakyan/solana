@@ -130,6 +130,7 @@ members = [
     "transaction-dos",
     "transaction-metrics-tracker",
     "transaction-status",
+    "transaction-status-smol",
     "transaction-view",
     "turbine",
     "type-overrides",
